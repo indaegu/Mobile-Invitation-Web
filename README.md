@@ -52,6 +52,7 @@
 - GitLens
 - Tailwind CSS IntelliSense
 - Error Lens
+- Gitmoji
 
 ### Deployment
 - **Vercel (Free)**
