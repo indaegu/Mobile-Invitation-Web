@@ -1,58 +1,73 @@
+import { useState } from 'react';
+import { invitationData as data } from '@/data/invitation.data';
+import CoverSection    from '@/components/sections/CoverSection';
+import GreetingSection from '@/components/sections/GreetingSection';
+import GallerySection  from '@/components/sections/GallerySection';
+import CalendarSection from '@/components/sections/CalendarSection';
+import LocationSection from '@/components/sections/LocationSection';
+import AccountSection  from '@/components/sections/AccountSection';
+import ScrollProgress  from '@/components/ui/ScrollProgress';
+import ScrollToTop     from '@/components/ui/ScrollToTop';
+import SectionNav      from '@/components/ui/SectionNav';
+
 export default function InvitationPage() {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-pink-50 to-purple-50 px-4">
-        <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 text-center">
-          {/* 아이콘 영역 */}
-          <div className="mb-6">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full">
-              <svg
-                className="w-10 h-10 text-green-600"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-            </div>
-          </div>
+  const [images, setImages] = useState<string[]>(data.images);
 
-          {/* 메인 텍스트 */}
-          <h1 className="text-2xl font-bold text-gray-800 mb-2">
-            정상 업로드 확인
-          </h1>
-          <p className="text-gray-600 mb-6">
-            페이지가 성공적으로 로드되었습니다
+  return (
+    <>
+      {/* 상단 스크롤 진행 바 */}
+      <ScrollProgress />
+
+      {/* 우측 섹션 네비게이션 도트 */}
+      <SectionNav />
+
+      {/* 맨 위로 버튼 */}
+      <ScrollToTop />
+
+      {/* 본문 컨테이너 — max-w-[430px]: 가장 큰 모바일 기준, 데스크탑에서는 중앙 정렬 */}
+      <div className="max-w-[430px] mx-auto min-h-svh bg-white">
+        <CoverSection
+          groomName={data.groomName}
+          brideName={data.brideName}
+          weddingDate={data.weddingDate}
+          weddingTime={data.weddingTime}
+          location={data.location}
+        />
+
+        <GreetingSection
+          greetingMessage={data.greetingMessage}
+          groomName={data.groomName}
+          brideName={data.brideName}
+          groomParents={data.groomParents}
+          brideParents={data.brideParents}
+        />
+
+        <GallerySection
+          images={images}
+          onAddImages={urls => setImages(prev => [...prev, ...urls])}
+        />
+
+        <CalendarSection
+          weddingDate={data.weddingDate}
+          weddingTime={data.weddingTime}
+        />
+
+        <LocationSection location={data.location} />
+
+        <AccountSection accounts={data.accounts} />
+
+        {/* 푸터 */}
+        <footer className="py-12 text-center safe-area bg-stone-50">
+          <div className="flex items-center justify-center gap-3 mb-3">
+            <div className="w-8 h-px bg-gray-200" />
+            <span className="text-gray-300 text-xs">♥</span>
+            <div className="w-8 h-px bg-gray-200" />
+          </div>
+          <p className="text-[10px] tracking-[0.4em] text-gray-300 uppercase">
+            {data.groomName} &amp; {data.brideName}
           </p>
-
-          {/* 상태 표시 */}
-          <div className="space-y-3">
-            <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-              <span className="text-sm text-gray-600">React</span>
-              <span className="text-sm font-semibold text-green-600">✓ 정상</span>
-            </div>
-            <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-              <span className="text-sm text-gray-600">Tailwind CSS</span>
-              <span className="text-sm font-semibold text-green-600">✓ 정상</span>
-            </div>
-            <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-              <span className="text-sm text-gray-600">TypeScript</span>
-              <span className="text-sm font-semibold text-green-600">✓ 정상</span>
-            </div>
-          </div>
-
-          {/* 하단 메시지 */}
-          <div className="mt-8 pt-6 border-t border-gray-200">
-            <p className="text-xs text-gray-500">
-              모바일 초대장 웹사이트가 준비되었습니다!!
-            </p>
-          </div>
-        </div>
+        </footer>
       </div>
-    );
-  }
-  
+    </>
+  );
+}
