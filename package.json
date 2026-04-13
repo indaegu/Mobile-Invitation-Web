@@ -37,7 +37,9 @@
     "react-dom": "^18.3.0"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["unrs-resolver"]
+    "onlyBuiltDependencies": [
+      "unrs-resolver"
+    ]
   },
   "devDependencies": {
     "@commitlint/cli": "^19.3.0",

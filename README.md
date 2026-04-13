@@ -1,4 +1,5 @@
 # Mobile-Invitation-Web
+
 디자이너 1 + 개발자 1로 구성된 모바일 청첩장 만들기 프로젝트!
 
 # 📱 Mobile Invitation Web (React + TypeScript)
@@ -12,6 +13,7 @@
 ---
 
 ## 🔗 Demo
+
 - Vercel 배포 URL: (배포 후 추가)
 
 ---
@@ -39,14 +41,17 @@
 ## 🛠 Tech Stack
 
 ### Core
+
 - **React 18**
 - **TypeScript**
 - **Vite**
 
 ### Styling
+
 - **Tailwind CSS**
 
 ### Tooling
+
 - ESLint
 - Prettier
 - GitLens
@@ -55,6 +60,7 @@
 - Gitmoji
 
 ### Deployment
+
 - **Vercel (Free)**
 
 ---
@@ -71,7 +77,7 @@ src/
  ├─ types/          # 도메인 타입 정의
  ├─ utils/          # 공통 유틸 함수
  └─ assets/         # 이미지 및 정적 리소스
-````
+```
 
 ---
 
@@ -79,9 +85,9 @@ src/
 
 ### 1️⃣ Prerequisites
 
-* Node.js **LTS**
-* npm 또는 pnpm
-* Git
+- Node.js **LTS**
+- npm 또는 pnpm
+- Git
 
 ---
 
@@ -103,7 +109,7 @@ npm run dev
 pnpm dev
 ```
 
-* Local: `http://localhost:5173`
+- Local: `http://localhost:5173`
 
 ---
 
@@ -118,20 +124,19 @@ npm run preview
 
 ## 📱 Mobile UX Considerations
 
-* 모든 주요 인터랙션은 **터치 기반 UX**를 고려해 설계
-* 복사 기능 수행 시 사용자 피드백 제공 (Toast)
-* 지도 버튼 클릭 시:
-
-  * 앱 설치 → 앱 실행
-  * 미설치 → 웹 지도 페이지로 fallback
+- 모든 주요 인터랙션은 **터치 기반 UX**를 고려해 설계
+- 복사 기능 수행 시 사용자 피드백 제공 (Toast)
+- 지도 버튼 클릭 시:
+  - 앱 설치 → 앱 실행
+  - 미설치 → 웹 지도 페이지로 fallback
 
 ---
 
 ## 📐 TypeScript Design
 
-* 도메인 중심 타입 설계
-* 데이터 구조를 타입으로 명확히 정의
-* 컴포넌트 props에 명확한 책임 부여
+- 도메인 중심 타입 설계
+- 데이터 구조를 타입으로 명확히 정의
+- 컴포넌트 props에 명확한 책임 부여
 
 ```ts
 type AccountInfo = {
@@ -145,32 +150,34 @@ type AccountInfo = {
 
 ## 🧠 What I Learned
 
-* React 컴포넌트 분리 및 책임 설계
-* TypeScript를 활용한 안정적인 UI 개발
-* 모바일 웹 환경에서의 실제 사용자 행동 고려
-* 정적 웹 서비스 배포 및 운영 흐름 이해
+- React 컴포넌트 분리 및 책임 설계
+- TypeScript를 활용한 안정적인 UI 개발
+- 모바일 웹 환경에서의 실제 사용자 행동 고려
+- 정적 웹 서비스 배포 및 운영 흐름 이해
 
 ---
 
 ## 🔮 Possible Improvements
 
-* 다크 모드 지원
-* Web Share API 연동
-* URL parameter 기반 데이터 분기 (여러 청첩장 템플릿화)
-* 애니메이션 개선 (Intersection Observer 활용)
+- 다크 모드 지원
+- Web Share API 연동
+- URL parameter 기반 데이터 분기 (여러 청첩장 템플릿화)
+- 애니메이션 개선 (Intersection Observer 활용)
 
 ---
 
 ## 🧪 Development Environment
 
-* Cursor (VS Code 기반)
-* ESLint + Prettier를 통한 코드 품질 관리
-* GitLens를 통한 변경 이력 추적
+- Cursor (VS Code 기반)
+- ESLint + Prettier를 통한 코드 품질 관리
+- GitLens를 통한 변경 이력 추적
 
 ---
 
 ## 📄 License
 
 MIT
+
+```
 
 ```

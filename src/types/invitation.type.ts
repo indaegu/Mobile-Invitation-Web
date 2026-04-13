@@ -13,7 +13,7 @@ export type ContactPerson = {
 export type RsvpEntry = {
   name: string;
   phone: string;
-  attendance: 'attending' | 'not-attending';
+  attendance: "attending" | "not-attending";
   adultCount?: number;
   childCount?: number;
   mealOption?: boolean;
@@ -53,4 +53,3 @@ export type InvitationData = {
   contacts: ContactPerson[];
   bgMusic?: string;
 };
-  

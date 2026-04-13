@@ -1,23 +1,23 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { invitationData as data } from '@/data/invitation.data'
-import CoverSection     from '@/components/sections/CoverSection'
-import GreetingSection  from '@/components/sections/GreetingSection'
-import GallerySection   from '@/components/sections/GallerySection'
-import CalendarSection  from '@/components/sections/CalendarSection'
-import LocationSection  from '@/components/sections/LocationSection'
-import ContactSection   from '@/components/sections/ContactSection'
-import RsvpSection      from '@/components/sections/RsvpSection'
-import GuestbookSection from '@/components/sections/GuestbookSection'
-import AccountSection   from '@/components/sections/AccountSection'
-import ScrollProgress   from '@/components/ui/ScrollProgress'
-import ScrollToTop      from '@/components/ui/ScrollToTop'
-import SectionNav       from '@/components/ui/SectionNav'
-import MusicPlayer      from '@/components/ui/MusicPlayer'
+import { useState } from "react";
+import { invitationData as data } from "@/data/invitation.data";
+import CoverSection from "@/components/sections/CoverSection";
+import GreetingSection from "@/components/sections/GreetingSection";
+import GallerySection from "@/components/sections/GallerySection";
+import CalendarSection from "@/components/sections/CalendarSection";
+import LocationSection from "@/components/sections/LocationSection";
+import ContactSection from "@/components/sections/ContactSection";
+import RsvpSection from "@/components/sections/RsvpSection";
+import GuestbookSection from "@/components/sections/GuestbookSection";
+import AccountSection from "@/components/sections/AccountSection";
+import ScrollProgress from "@/components/ui/ScrollProgress";
+import ScrollToTop from "@/components/ui/ScrollToTop";
+import SectionNav from "@/components/ui/SectionNav";
+import MusicPlayer from "@/components/ui/MusicPlayer";
 
 export default function InvitationPage() {
-  const [images, setImages] = useState<string[]>(data.images)
+  const [images, setImages] = useState<string[]>(data.images);
 
   return (
     <>
@@ -53,7 +53,7 @@ export default function InvitationPage() {
 
         <GallerySection
           images={images}
-          onAddImages={urls => setImages(prev => [...prev, ...urls])}
+          onAddImages={(urls) => setImages((prev) => [...prev, ...urls])}
         />
 
         <CalendarSection
@@ -84,5 +84,5 @@ export default function InvitationPage() {
         </footer>
       </div>
     </>
-  )
+  );
 }

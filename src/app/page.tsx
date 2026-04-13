@@ -1,5 +1,5 @@
-import InvitationPage from '@/screens/InvitationPage'
+import InvitationPage from "@/screens/InvitationPage";
 
 export default function Home() {
-  return <InvitationPage />
+  return <InvitationPage />;
 }

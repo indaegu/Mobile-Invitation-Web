@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
 type Options = {
   threshold?: number;
@@ -6,9 +6,11 @@ type Options = {
   once?: boolean;
 };
 
-export function useInView<T extends HTMLElement = HTMLDivElement>(
-  { threshold = 0.15, rootMargin = '0px', once = true }: Options = {}
-) {
+export function useInView<T extends HTMLElement = HTMLDivElement>({
+  threshold = 0.15,
+  rootMargin = "0px",
+  once = true,
+}: Options = {}) {
   const ref = useRef<T>(null);
   const [inView, setInView] = useState(false);
 
@@ -25,7 +27,7 @@ export function useInView<T extends HTMLElement = HTMLDivElement>(
           setInView(false);
         }
       },
-      { threshold, rootMargin }
+      { threshold, rootMargin },
     );
 
     observer.observe(el);
