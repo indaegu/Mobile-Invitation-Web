@@ -7,7 +7,7 @@
  *   2. uploadLocally → uploadToServer 로 교체
  */
 
-const API_BASE = import.meta.env.VITE_API_BASE ?? '';
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "";
 
 export type UploadedImage = {
   id: string;
@@ -31,12 +31,12 @@ export type UploadedImage = {
 function uploadLocally(file: File): Promise<UploadedImage> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.onload = e =>
+    reader.onload = (e) =>
       resolve({
         id: `local-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
         url: e.target?.result as string,
       });
-    reader.onerror = () => reject(new Error('파일 읽기에 실패했습니다'));
+    reader.onerror = () => reject(new Error("파일 읽기에 실패했습니다"));
     reader.readAsDataURL(file);
   });
 }
@@ -48,7 +48,7 @@ export async function uploadImage(file: File): Promise<UploadedImage> {
 }
 
 export async function uploadImages(files: File[]): Promise<UploadedImage[]> {
-  const imageFiles = files.filter(f => f.type.startsWith('image/'));
+  const imageFiles = files.filter((f) => f.type.startsWith("image/"));
   // 병렬 업로드
   return Promise.all(imageFiles.map(uploadImage));
 }

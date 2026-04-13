@@ -1,34 +1,54 @@
-import type { InvitationData } from '@/types/invitation.type';
-import SectionTitle from '@/components/ui/SectionTitle';
-import AnimateOnScroll from '@/components/ui/AnimateOnScroll';
+"use client";
 
-type Props = Pick<InvitationData, 'weddingDate' | 'weddingTime'>;
+import type { InvitationData } from "@/types/invitation.type";
+import { generateGoogleCalendarUrl, downloadICS } from "@/lib/calendarUtils";
+import SectionTitle from "@/components/ui/SectionTitle";
+import AnimateOnScroll from "@/components/ui/AnimateOnScroll";
 
-const DAY_NAMES   = ['일', '월', '화', '수', '목', '금', '토'];
-const MONTH_NAMES = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+type Props = Pick<InvitationData, "weddingDate" | "weddingTime">;
+
+const DAY_NAMES = ["일", "월", "화", "수", "목", "금", "토"];
+const MONTH_NAMES = [
+  "1월",
+  "2월",
+  "3월",
+  "4월",
+  "5월",
+  "6월",
+  "7월",
+  "8월",
+  "9월",
+  "10월",
+  "11월",
+  "12월",
+];
 
 function formatTime(time: string): string {
-  const [h, m] = time.split(':').map(Number);
-  const period = h < 12 ? '오전' : '오후';
-  const hour   = h % 12 === 0 ? 12 : h % 12;
+  const [h, m] = time.split(":").map(Number);
+  const period = h < 12 ? "오전" : "오후";
+  const hour = h % 12 === 0 ? 12 : h % 12;
   return m > 0 ? `${period} ${hour}시 ${m}분` : `${period} ${hour}시`;
 }
 
 function daysUntil(weddingDate: string): number {
-  const today   = new Date();
+  const today = new Date();
   today.setHours(0, 0, 0, 0);
   const wedding = new Date(weddingDate);
   wedding.setHours(0, 0, 0, 0);
-  return Math.ceil((wedding.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+  return Math.ceil(
+    (wedding.getTime() - today.getTime()) / (1000 * 60 * 60 * 24),
+  );
 }
 
+const WEDDING_TITLE = "결혼식";
+
 export default function CalendarSection({ weddingDate, weddingTime }: Props) {
-  const date       = new Date(weddingDate);
-  const year       = date.getFullYear();
-  const month      = date.getMonth();
+  const date = new Date(weddingDate);
+  const year = date.getFullYear();
+  const month = date.getMonth();
   const weddingDay = date.getDate();
-  const dayName    = DAY_NAMES[date.getDay()];
-  const remaining  = daysUntil(weddingDate);
+  const dayName = DAY_NAMES[date.getDay()];
+  const remaining = daysUntil(weddingDate);
 
   const firstDow = new Date(year, month, 1).getDay();
   const lastDate = new Date(year, month + 1, 0).getDate();
@@ -47,7 +67,11 @@ export default function CalendarSection({ weddingDate, weddingTime }: Props) {
         <SectionTitle en="Calendar" ko="날짜" />
       </AnimateOnScroll>
 
-      <AnimateOnScroll animation="scale" delay={100} className="w-full max-w-xs">
+      <AnimateOnScroll
+        animation="scale"
+        delay={100}
+        className="w-full max-w-xs"
+      >
         {/* 연·월 */}
         <p className="text-base text-gray-600 mb-5 tracking-wider">
           {year}년 {MONTH_NAMES[month]}
@@ -59,7 +83,11 @@ export default function CalendarSection({ weddingDate, weddingTime }: Props) {
             <span
               key={d}
               className={`text-[11px] font-medium py-1 ${
-                i === 0 ? 'text-rose-400' : i === 6 ? 'text-sky-400' : 'text-gray-400'
+                i === 0
+                  ? "text-rose-400"
+                  : i === 6
+                    ? "text-sky-400"
+                    : "text-gray-400"
               }`}
             >
               {d}
@@ -70,18 +98,20 @@ export default function CalendarSection({ weddingDate, weddingTime }: Props) {
         {/* 날짜 그리드 */}
         <div className="grid grid-cols-7">
           {cells.map((day, idx) => {
-            const col        = idx % 7;
-            const isWedding  = day === weddingDay;
+            const col = idx % 7;
+            const isWedding = day === weddingDay;
             return (
               <div key={idx} className="flex items-center justify-center py-1">
                 {day !== null && (
                   <span
                     className={`w-8 h-8 flex items-center justify-center rounded-full text-sm ${
                       isWedding
-                        ? 'bg-rose-400 text-white font-semibold shadow-md ring-4 ring-rose-100'
-                        : col === 0 ? 'text-rose-400'
-                        : col === 6 ? 'text-sky-400'
-                        : 'text-gray-600'
+                        ? "bg-rose-400 text-white font-semibold shadow-md ring-4 ring-rose-100"
+                        : col === 0
+                          ? "text-rose-400"
+                          : col === 6
+                            ? "text-sky-400"
+                            : "text-gray-600"
                     }`}
                   >
                     {day}
@@ -96,18 +126,55 @@ export default function CalendarSection({ weddingDate, weddingTime }: Props) {
       {/* 날짜 정보 */}
       <AnimateOnScroll animation="fade-up" delay={300}>
         <p className="mt-7 text-sm text-gray-500 tracking-wide">
-          {year}년 {MONTH_NAMES[month]} {weddingDay}일 {dayName}요일&ensp;{formatTime(weddingTime)}
+          {year}년 {MONTH_NAMES[month]} {weddingDay}일 {dayName}요일&ensp;
+          {formatTime(weddingTime)}
         </p>
 
         {/* D-day 카운터 */}
         {remaining >= 0 && (
           <div className="mt-5 inline-flex items-center gap-2 bg-rose-50 border border-rose-100 rounded-full px-5 py-2">
-            <span className="text-[11px] tracking-widest text-rose-400 uppercase">D-day</span>
+            <span className="text-[11px] tracking-widest text-rose-400 uppercase">
+              D-day
+            </span>
             <span className="text-lg font-light text-rose-500">
-              {remaining === 0 ? '오늘 ♥' : `-${remaining}`}
+              {remaining === 0 ? "오늘 ♥" : `-${remaining}`}
             </span>
           </div>
         )}
+      </AnimateOnScroll>
+
+      {/* 캘린더 추가 버튼 */}
+      <AnimateOnScroll animation="fade-up" delay={400}>
+        <div className="mt-8 flex gap-3 px-0">
+          <a
+            href={generateGoogleCalendarUrl({
+              title: WEDDING_TITLE,
+              date: weddingDate,
+              time: weddingTime,
+              location: "",
+              durationMinutes: 60,
+            })}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-1 py-3.5 text-xs text-center rounded-2xl border border-sky-200 text-sky-600 bg-sky-50 font-medium active:opacity-70 transition-opacity"
+          >
+            구글 캘린더
+          </a>
+          <button
+            onClick={() =>
+              downloadICS({
+                title: WEDDING_TITLE,
+                date: weddingDate,
+                time: weddingTime,
+                location: "",
+                durationMinutes: 60,
+              })
+            }
+            className="flex-1 py-3.5 text-xs text-center rounded-2xl border border-gray-200 text-gray-600 bg-gray-50 font-medium active:opacity-70 transition-opacity"
+          >
+            애플 캘린더
+          </button>
+        </div>
       </AnimateOnScroll>
     </section>
   );

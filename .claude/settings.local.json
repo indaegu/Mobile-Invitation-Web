@@ -4,7 +4,10 @@
       "Bash(npx tsc:*)",
       "Bash(npx:*)",
       "Bash(cmd:*)",
-      "Bash(echo \"exit: $?\")"
+      "Bash(echo \"exit: $?\")",
+      "Bash(pnpm type-check:*)",
+      "Bash(pnpm add:*)",
+      "Bash(rm -rf .next)"
     ]
   }
 }

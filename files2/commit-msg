@@ -1,0 +1,43 @@
+#!/usr/bin/env sh
+# .husky/commit-msg
+# 커밋 메시지 형식 검사 — 실패 시 커밋 차단
+#
+# 검사 항목 (docs/CONVENTIONS.md 기준):
+#   1. Conventional Commits 형식 준수
+#   2. type이 허용 목록에 있는지
+#   3. subject 50자 이내
+#   4. subject 마침표로 끝나지 않는지
+
+. "$(dirname "$0")/_/husky.sh"
+
+echo ""
+echo "🔍 커밋 메시지 형식 검사..."
+
+# commitlint로 메시지 검사
+pnpm commitlint --edit "$1"
+
+if [ $? -ne 0 ]; then
+  echo ""
+  echo "❌ [차단] 커밋 메시지가 Conventional Commits 형식에 맞지 않습니다."
+  echo ""
+  echo "   올바른 형식:"
+  echo "   <type>(<scope>): <subject>"
+  echo ""
+  echo "   허용 타입:"
+  echo "   feat / fix / refactor / style / test / docs / chore / perf / ci / revert"
+  echo ""
+  echo "   예시:"
+  echo "   feat(rsvp): 참석 여부 제출 폼 추가"
+  echo "   fix(map): iOS Safari 렌더링 오류 수정"
+  echo "   docs(readme): 설치 방법 업데이트"
+  echo ""
+  echo "   규칙:"
+  echo "   - subject는 50자 이내"
+  echo "   - subject 끝에 마침표(.) 금지"
+  echo "   - type은 소문자"
+  echo ""
+  exit 1
+fi
+
+echo "✅ 커밋 메시지 형식 통과"
+echo ""

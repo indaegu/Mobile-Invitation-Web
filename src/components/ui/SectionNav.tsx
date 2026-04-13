@@ -1,18 +1,23 @@
-import { useEffect, useState } from 'react';
+"use client";
+
+import { useEffect, useState } from "react";
 
 type SectionDef = { id: string; label: string };
 
 const SECTIONS: SectionDef[] = [
-  { id: 'cover',    label: '커버'   },
-  { id: 'greeting', label: '인사말' },
-  { id: 'gallery',  label: '갤러리' },
-  { id: 'calendar', label: '날짜'   },
-  { id: 'location', label: '위치'   },
-  { id: 'account',  label: '계좌'   },
+  { id: "cover", label: "커버" },
+  { id: "greeting", label: "인사말" },
+  { id: "gallery", label: "갤러리" },
+  { id: "calendar", label: "날짜" },
+  { id: "location", label: "위치" },
+  { id: "contact", label: "연락처" },
+  { id: "rsvp", label: "RSVP" },
+  { id: "guestbook", label: "방명록" },
+  { id: "account", label: "계좌" },
 ];
 
 export default function SectionNav() {
-  const [active, setActive] = useState('cover');
+  const [active, setActive] = useState("cover");
 
   useEffect(() => {
     // 스크롤 위치 기준으로 뷰포트 중앙에 가장 가까운 섹션을 활성화
@@ -25,19 +30,22 @@ export default function SectionNav() {
         const el = document.getElementById(id);
         if (!el) return;
         const dist = Math.abs(el.getBoundingClientRect().top - mid);
-        if (dist < minDist) { minDist = dist; nearest = id; }
+        if (dist < minDist) {
+          minDist = dist;
+          nearest = id;
+        }
       });
 
       setActive(nearest);
     };
 
-    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const scrollTo = (id: string) =>
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
   return (
     <nav
@@ -55,8 +63,8 @@ export default function SectionNav() {
           <span
             className={`block rounded-full transition-all duration-300 ${
               active === id
-                ? 'w-2 h-2 bg-rose-400'
-                : 'w-1.5 h-1.5 bg-gray-300 group-hover:bg-gray-400'
+                ? "w-2 h-2 bg-rose-400"
+                : "w-1.5 h-1.5 bg-gray-300 group-hover:bg-gray-400"
             }`}
           />
           {/* 툴팁 */}

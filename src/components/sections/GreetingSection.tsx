@@ -1,8 +1,15 @@
-import type { InvitationData } from '@/types/invitation.type';
-import SectionTitle from '@/components/ui/SectionTitle';
-import AnimateOnScroll from '@/components/ui/AnimateOnScroll';
+import type { InvitationData } from "@/types/invitation.type";
+import SectionTitle from "@/components/ui/SectionTitle";
+import AnimateOnScroll from "@/components/ui/AnimateOnScroll";
 
-type Props = Pick<InvitationData, 'greetingMessage' | 'groomName' | 'brideName' | 'groomParents' | 'brideParents'>;
+type Props = Pick<
+  InvitationData,
+  | "greetingMessage"
+  | "groomName"
+  | "brideName"
+  | "groomParents"
+  | "brideParents"
+>;
 
 export default function GreetingSection({
   greetingMessage,
@@ -33,14 +40,18 @@ export default function GreetingSection({
           <div className="mt-10 pt-8 border-t border-gray-100 space-y-2 text-xs text-gray-400">
             {groomParents && (
               <p>
-                <span className="text-gray-300">{groomParents.father} · {groomParents.mother}</span>
+                <span className="text-gray-300">
+                  {groomParents.father} · {groomParents.mother}
+                </span>
                 &ensp;의 아들&ensp;
                 <span className="text-gray-600 font-medium">{groomName}</span>
               </p>
             )}
             {brideParents && (
               <p>
-                <span className="text-gray-300">{brideParents.father} · {brideParents.mother}</span>
+                <span className="text-gray-300">
+                  {brideParents.father} · {brideParents.mother}
+                </span>
                 &ensp;의 딸&ensp;
                 <span className="text-gray-600 font-medium">{brideName}</span>
               </p>
