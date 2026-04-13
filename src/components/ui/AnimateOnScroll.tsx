@@ -1,3 +1,5 @@
+'use client'
+
 import { useInView } from '@/hooks/useInView';
 
 type Animation = 'fade-up' | 'fade-left' | 'fade-right' | 'scale' | 'fade';

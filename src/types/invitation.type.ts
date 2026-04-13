@@ -4,6 +4,28 @@ export type AccountInfo = {
   accountNumber: string;
 };
 
+export type ContactPerson = {
+  role: string;
+  name: string;
+  phone: string;
+};
+
+export type RsvpEntry = {
+  name: string;
+  phone: string;
+  attendance: 'attending' | 'not-attending';
+  adultCount?: number;
+  childCount?: number;
+  mealOption?: boolean;
+};
+
+export type GuestbookEntry = {
+  id: string;
+  name: string;
+  message: string;
+  createdAt: string;
+};
+
 export type LocationInfo = {
   name: string;
   address: string;
@@ -28,5 +50,7 @@ export type InvitationData = {
   accounts: AccountInfo[];
   location: LocationInfo;
   images: string[];
+  contacts: ContactPerson[];
+  bgMusic?: string;
 };
   

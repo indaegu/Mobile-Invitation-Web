@@ -1,0 +1,275 @@
+/* globals.css */
+@import "tailwindcss";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ── 기본 레이아웃 ── */
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  /* 섹션 단위 스냅 스크롤 */
+  scroll-snap-type: y proximity;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard",
+    "Noto Sans KR", system-ui, sans-serif;
+  color: #1c1917;
+  background-color: #fafaf9;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  /* iOS 세이프 에어리어 */
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.safe-area {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* ── 스크롤바 숨김 (갤러리 가로 스크롤) ── */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ── 섹션 스냅 정렬 ── */
+.snap-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* ========================================================
+   Cover 섹션 — 로드 시 순차 진입 애니메이션
+   ======================================================== */
+@keyframes coverFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+@keyframes coverFadeIn {
+  from {
+    opacity: 0;
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+@keyframes coverLineGrow {
+  from {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+@keyframes heartBeat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  15% {
+    transform: scale(1.3);
+  }
+  30% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.2);
+  }
+}
+@keyframes floatOrb {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-12px) scale(1.04);
+  }
+}
+
+.cover-enter-1 {
+  animation: coverFadeIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s both;
+}
+.cover-enter-2 {
+  animation: coverFadeUp 1.1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.8s both;
+}
+.cover-enter-3 {
+  animation: coverFadeUp 1.1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.3s both;
+}
+.cover-enter-4 {
+  animation: coverFadeIn 0.9s ease 1.9s both;
+}
+.cover-line {
+  animation: coverLineGrow 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.5s both;
+  transform-origin: top;
+}
+.cover-heart {
+  animation: heartBeat 2.4s ease-in-out 2.5s infinite;
+  display: inline-block;
+}
+.cover-orb {
+  animation: floatOrb 6s ease-in-out infinite;
+}
+
+/* ========================================================
+   스크롤 진입 애니메이션 (Intersection Observer 연동)
+   ======================================================== */
+.scroll-anim {
+  transition-property: opacity, transform, filter;
+  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition-duration: 0.9s;
+  will-change: opacity, transform;
+}
+
+/* 초기 상태 (숨김 + 변환) */
+.scroll-anim-fade-up {
+  opacity: 0;
+  transform: translateY(28px);
+  filter: blur(6px);
+}
+.scroll-anim-fade-left {
+  opacity: 0;
+  transform: translateX(-28px);
+  filter: blur(4px);
+}
+.scroll-anim-fade-right {
+  opacity: 0;
+  transform: translateX(28px);
+  filter: blur(4px);
+}
+.scroll-anim-scale {
+  opacity: 0;
+  transform: scale(0.91);
+  filter: blur(6px);
+}
+.scroll-anim-fade {
+  opacity: 0;
+  filter: blur(4px);
+}
+
+/* 진입 완료 상태 */
+.scroll-anim.visible {
+  opacity: 1;
+  transform: none;
+  filter: blur(0);
+}
+
+/* 딜레이 헬퍼 */
+.anim-delay-100 {
+  transition-delay: 0.1s;
+}
+.anim-delay-200 {
+  transition-delay: 0.2s;
+}
+.anim-delay-300 {
+  transition-delay: 0.3s;
+}
+.anim-delay-400 {
+  transition-delay: 0.4s;
+}
+.anim-delay-500 {
+  transition-delay: 0.5s;
+}
+.anim-delay-600 {
+  transition-delay: 0.6s;
+}
+
+/* ========================================================
+   섹션 구분선 장식
+   ======================================================== */
+@keyframes ornamentFade {
+  from {
+    opacity: 0;
+    transform: scaleX(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+.section-ornament {
+  animation: ornamentFade 0.6s ease both;
+}
+
+/* ========================================================
+   갤러리 사진 hover 효과
+   ======================================================== */
+.gallery-card {
+  transition:
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.3s ease;
+}
+.gallery-card:active {
+  transform: scale(0.97);
+}
+
+/* ========================================================
+   음악 플레이어 — 재생 중 이퀄라이저 바
+   ======================================================== */
+@keyframes musicBar {
+  0%,
+  100% {
+    height: 4px;
+  }
+  50% {
+    height: 16px;
+  }
+}
+.music-bar-1 {
+  height: 8px;
+  animation: musicBar 0.8s ease-in-out 0s infinite;
+}
+.music-bar-2 {
+  height: 12px;
+  animation: musicBar 0.8s ease-in-out 0.2s infinite;
+}
+.music-bar-3 {
+  height: 6px;
+  animation: musicBar 0.8s ease-in-out 0.4s infinite;
+}
+
+/* ========================================================
+   계좌 카드 복사 버튼 ripple
+   ======================================================== */
+@keyframes ripple {
+  from {
+    transform: scale(0);
+    opacity: 0.4;
+  }
+  to {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+.copy-ripple::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: #f43f5e;
+  animation: ripple 0.5s ease-out;
+}

@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from 'react';
 import type { AccountInfo, InvitationData } from '@/types/invitation.type';
 import SectionTitle from '@/components/ui/SectionTitle';

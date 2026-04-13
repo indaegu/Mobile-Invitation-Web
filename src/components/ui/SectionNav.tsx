@@ -1,14 +1,19 @@
+'use client'
+
 import { useEffect, useState } from 'react';
 
 type SectionDef = { id: string; label: string };
 
 const SECTIONS: SectionDef[] = [
-  { id: 'cover',    label: '커버'   },
-  { id: 'greeting', label: '인사말' },
-  { id: 'gallery',  label: '갤러리' },
-  { id: 'calendar', label: '날짜'   },
-  { id: 'location', label: '위치'   },
-  { id: 'account',  label: '계좌'   },
+  { id: 'cover',     label: '커버'   },
+  { id: 'greeting',  label: '인사말' },
+  { id: 'gallery',   label: '갤러리' },
+  { id: 'calendar',  label: '날짜'   },
+  { id: 'location',  label: '위치'   },
+  { id: 'contact',   label: '연락처' },
+  { id: 'rsvp',      label: 'RSVP'  },
+  { id: 'guestbook', label: '방명록' },
+  { id: 'account',   label: '계좌'   },
 ];
 
 export default function SectionNav() {

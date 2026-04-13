@@ -1,4 +1,7 @@
+'use client'
+
 import type { InvitationData } from '@/types/invitation.type';
+import { generateGoogleCalendarUrl, downloadICS } from '@/lib/calendarUtils';
 import SectionTitle from '@/components/ui/SectionTitle';
 import AnimateOnScroll from '@/components/ui/AnimateOnScroll';
 
@@ -21,6 +24,8 @@ function daysUntil(weddingDate: string): number {
   wedding.setHours(0, 0, 0, 0);
   return Math.ceil((wedding.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
 }
+
+const WEDDING_TITLE = '결혼식';
 
 export default function CalendarSection({ weddingDate, weddingTime }: Props) {
   const date       = new Date(weddingDate);
@@ -108,6 +113,40 @@ export default function CalendarSection({ weddingDate, weddingTime }: Props) {
             </span>
           </div>
         )}
+      </AnimateOnScroll>
+
+      {/* 캘린더 추가 버튼 */}
+      <AnimateOnScroll animation="fade-up" delay={400}>
+        <div className="mt-8 flex gap-3 px-0">
+          <a
+            href={generateGoogleCalendarUrl({
+              title: WEDDING_TITLE,
+              date: weddingDate,
+              time: weddingTime,
+              location: '',
+              durationMinutes: 60,
+            })}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-1 py-3.5 text-xs text-center rounded-2xl border border-sky-200 text-sky-600 bg-sky-50 font-medium active:opacity-70 transition-opacity"
+          >
+            구글 캘린더
+          </a>
+          <button
+            onClick={() =>
+              downloadICS({
+                title: WEDDING_TITLE,
+                date: weddingDate,
+                time: weddingTime,
+                location: '',
+                durationMinutes: 60,
+              })
+            }
+            className="flex-1 py-3.5 text-xs text-center rounded-2xl border border-gray-200 text-gray-600 bg-gray-50 font-medium active:opacity-70 transition-opacity"
+          >
+            애플 캘린더
+          </button>
+        </div>
       </AnimateOnScroll>
     </section>
   );

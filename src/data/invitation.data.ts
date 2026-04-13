@@ -28,4 +28,12 @@ export const invitationData: InvitationData = {
     transport: '지하철 3호선 동대입구역 5번 출구 도보 5분\n지하철 6호선 한남역 2번 출구 도보 10분\n버스 간선 420, 지선 2412 신라호텔 하차',
   },
   images: [],
+  contacts: [
+    { role: '신랑', name: '홍길동', phone: '010-1234-5678' },
+    { role: '신부', name: '김영희', phone: '010-9876-5432' },
+    { role: '신랑 아버지', name: '홍판서', phone: '010-1111-2222' },
+    { role: '신랑 어머니', name: '임씨', phone: '010-1111-3333' },
+    { role: '신부 아버지', name: '김철수', phone: '010-3333-4444' },
+    { role: '신부 어머니', name: '박씨', phone: '010-3333-5555' },
+  ],
 };

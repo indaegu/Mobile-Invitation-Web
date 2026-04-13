@@ -1,3 +1,5 @@
+'use client'
+
 import { useRef, useState } from 'react';
 import { uploadImages } from '@/api/gallery';
 import SectionTitle from '@/components/ui/SectionTitle';
@@ -123,6 +125,7 @@ export default function GallerySection({ images, onAddImages }: Props) {
                 className="flex-none w-[260px] h-[340px] snap-center"
               >
                 <div className="gallery-card w-full h-full rounded-3xl overflow-hidden shadow-sm">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={src}
                     alt={`웨딩 사진 ${index + 1}`}

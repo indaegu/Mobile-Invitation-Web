@@ -1,17 +1,23 @@
-import { useState } from 'react';
-import { invitationData as data } from '@/data/invitation.data';
-import CoverSection    from '@/components/sections/CoverSection';
-import GreetingSection from '@/components/sections/GreetingSection';
-import GallerySection  from '@/components/sections/GallerySection';
-import CalendarSection from '@/components/sections/CalendarSection';
-import LocationSection from '@/components/sections/LocationSection';
-import AccountSection  from '@/components/sections/AccountSection';
-import ScrollProgress  from '@/components/ui/ScrollProgress';
-import ScrollToTop     from '@/components/ui/ScrollToTop';
-import SectionNav      from '@/components/ui/SectionNav';
+'use client'
+
+import { useState } from 'react'
+import { invitationData as data } from '@/data/invitation.data'
+import CoverSection     from '@/components/sections/CoverSection'
+import GreetingSection  from '@/components/sections/GreetingSection'
+import GallerySection   from '@/components/sections/GallerySection'
+import CalendarSection  from '@/components/sections/CalendarSection'
+import LocationSection  from '@/components/sections/LocationSection'
+import ContactSection   from '@/components/sections/ContactSection'
+import RsvpSection      from '@/components/sections/RsvpSection'
+import GuestbookSection from '@/components/sections/GuestbookSection'
+import AccountSection   from '@/components/sections/AccountSection'
+import ScrollProgress   from '@/components/ui/ScrollProgress'
+import ScrollToTop      from '@/components/ui/ScrollToTop'
+import SectionNav       from '@/components/ui/SectionNav'
+import MusicPlayer      from '@/components/ui/MusicPlayer'
 
 export default function InvitationPage() {
-  const [images, setImages] = useState<string[]>(data.images);
+  const [images, setImages] = useState<string[]>(data.images)
 
   return (
     <>
@@ -23,6 +29,9 @@ export default function InvitationPage() {
 
       {/* 맨 위로 버튼 */}
       <ScrollToTop />
+
+      {/* 배경 음악 (파일이 있을 경우에만 표시) */}
+      {data.bgMusic && <MusicPlayer src={data.bgMusic} />}
 
       {/* 본문 컨테이너 — max-w-[430px]: 가장 큰 모바일 기준, 데스크탑에서는 중앙 정렬 */}
       <div className="max-w-[430px] mx-auto min-h-svh bg-white">
@@ -54,6 +63,12 @@ export default function InvitationPage() {
 
         <LocationSection location={data.location} />
 
+        <ContactSection contacts={data.contacts} />
+
+        <RsvpSection />
+
+        <GuestbookSection />
+
         <AccountSection accounts={data.accounts} />
 
         {/* 푸터 */}
@@ -69,5 +84,5 @@ export default function InvitationPage() {
         </footer>
       </div>
     </>
-  );
+  )
 }
