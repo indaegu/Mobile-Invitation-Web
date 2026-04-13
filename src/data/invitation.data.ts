@@ -1,6 +1,4 @@
-import type { InvitationData } from "@/types/invitation.type";
-
-export const invitationData: InvitationData = {
+export const invitationData = {
   groomName: "홍길동",
   brideName: "김영희",
   groomParents: {
@@ -53,4 +51,5 @@ export const invitationData: InvitationData = {
     { role: "신부 아버지", name: "김철수", phone: "010-3333-4444" },
     { role: "신부 어머니", name: "박씨", phone: "010-3333-5555" },
   ],
+  bgMusic: undefined,
 };

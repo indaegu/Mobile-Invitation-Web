@@ -1,6 +1,15 @@
 /* globals.css */
 @import "tailwindcss";
 
+:root {
+  --font-display: "Cormorant Garamond", serif;
+  --font-serif: "Gowun Batang", serif;
+  --font-sans: "Noto Sans KR", sans-serif;
+  --color-ink: #171412;
+  --color-line: rgba(34, 28, 23, 0.08);
+  --shadow-soft: 0 20px 60px rgba(23, 20, 18, 0.08);
+}
+
 *,
 *::before,
 *::after {
@@ -21,15 +30,88 @@ body {
   margin: 0;
   padding: 0;
   width: 100%;
-  font-family:
-    -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard",
-    "Noto Sans KR", system-ui, sans-serif;
-  color: #1c1917;
-  background-color: #fafaf9;
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background:
+    radial-gradient(circle at top, rgba(227, 215, 198, 0.45), transparent 22%),
+    linear-gradient(180deg, #fbf9f5 0%, #f4efe8 100%);
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
   /* iOS 세이프 에어리어 */
   padding-bottom: env(safe-area-inset-bottom);
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+.invitation-shell {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.82), #fff 18%);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(14px);
+}
+
+.section-surface {
+  background: rgba(255, 255, 255, 0.74);
+  border: 1px solid var(--color-line);
+  box-shadow: var(--shadow-soft);
+}
+
+.soft-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), #f8f4ee);
+  border: 1px solid var(--color-line);
+  box-shadow: 0 14px 30px rgba(23, 20, 18, 0.08);
+}
+
+.section-kicker {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: 0.08em;
+  color: rgba(23, 20, 18, 0.48);
+}
+
+.section-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(23, 20, 18, 0.18),
+    transparent
+  );
+}
+
+.image-mask {
+  overflow: hidden;
+  border-radius: 999px 999px 32px 32px;
+}
+
+.paper-panel {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.92),
+      rgba(249, 245, 239, 0.96)
+    ),
+    #f7f4ef;
+  border: 1px solid var(--color-line);
 }
 
 .safe-area {

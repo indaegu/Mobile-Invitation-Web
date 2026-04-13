@@ -4,10 +4,39 @@ export type AccountInfo = {
   accountNumber: string;
 };
 
+export type AccountGroup = {
+  title: string;
+  items: AccountInfo[];
+};
+
 export type ContactPerson = {
   role: string;
   name: string;
   phone: string;
+};
+
+export type PersonProfile = {
+  role: string;
+  name: string;
+  summary: string;
+  tags: string[];
+  image: string;
+};
+
+export type InterviewAnswer = {
+  speaker: string;
+  answer: string;
+};
+
+export type InterviewCard = {
+  question: string;
+  answers: InterviewAnswer[];
+};
+
+export type FlowerOption = {
+  name: string;
+  price: string;
+  description: string;
 };
 
 export type RsvpEntry = {
@@ -44,12 +73,23 @@ export type InvitationData = {
   brideName: string;
   groomParents?: ParentInfo;
   brideParents?: ParentInfo;
-  weddingDate: string; // "YYYY-MM-DD"
-  weddingTime: string; // "HH:MM" (24h)
+  weddingDate: string;
+  weddingTime: string;
+  heroMessage: string;
+  invitationTitle: string;
+  invitationBody: string[];
+  coupleSince: string;
   greetingMessage: string;
+  heroImage: string;
+  storyImages: string[];
   accounts: AccountInfo[];
+  accountGroups: AccountGroup[];
   location: LocationInfo;
   images: string[];
   contacts: ContactPerson[];
+  profiles: PersonProfile[];
+  interviews: InterviewCard[];
+  flowerMessage: string[];
+  flowerOptions: FlowerOption[];
   bgMusic?: string;
 };
