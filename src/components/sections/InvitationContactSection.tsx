@@ -79,9 +79,9 @@ export default function InvitationContactSection({
           {isOpen && (
             <div
               id="invitation-contact-panel"
-              className="grid gap-0 border-t border-[rgba(23,20,18,0.08)] md:grid-cols-2"
+              className="grid grid-cols-2 border-t border-[rgba(23,20,18,0.08)]"
             >
-              <div className="px-5 py-3 md:border-r md:border-[rgba(23,20,18,0.08)]">
+              <div className="border-r border-[rgba(23,20,18,0.08)] px-4 py-3">
                 {groomContacts.map((person) => (
                   <ContactLink
                     key={`${person.role}-${person.phone}`}
@@ -89,7 +89,7 @@ export default function InvitationContactSection({
                   />
                 ))}
               </div>
-              <div className="px-5 py-3">
+              <div className="px-4 py-3">
                 {brideContacts.map((person) => (
                   <ContactLink
                     key={`${person.role}-${person.phone}`}

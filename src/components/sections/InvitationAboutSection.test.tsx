@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import InvitationAboutSection from "./InvitationAboutSection";
 import type { InterviewCard, PersonProfile } from "@/types/invitation.type";
 
@@ -27,10 +27,17 @@ const INTERVIEWS: InterviewCard[] = [
       { speaker: "신부 장인영", answer: "차분하고 다정했어요." },
     ],
   },
+  {
+    question: "결혼을 결심한 계기",
+    answers: [
+      { speaker: "신랑 성창민", answer: "평범한 날이 더 편안했습니다." },
+      { speaker: "신부 장인영", answer: "확신이 오래 남았어요." },
+    ],
+  },
 ];
 
 describe("InvitationAboutSection", () => {
-  it("프로필 카드와 인터뷰 내용을 렌더링한다", () => {
+  it("프로필 카드와 첫 번째 인터뷰를 렌더링한다", () => {
     render(
       <InvitationAboutSection
         coupleSince="2025년 4월 13일부터 함께하고 있습니다."
@@ -47,5 +54,61 @@ describe("InvitationAboutSection", () => {
     ).toBeInTheDocument();
     expect(screen.getByText("첫인상은 어땠나요?")).toBeInTheDocument();
     expect(screen.getByText("따뜻한 사람 같았습니다.")).toBeInTheDocument();
+  });
+
+  it("'Interview / 우리에게 물었습니다' 헤더를 렌더링한다", () => {
+    render(
+      <InvitationAboutSection
+        coupleSince="2025년 4월 13일부터 함께하고 있습니다."
+        profiles={PROFILES}
+        interviews={INTERVIEWS}
+      />,
+    );
+
+    expect(screen.getByText("우리에게 물었습니다")).toBeInTheDocument();
+    expect(screen.getByText("Interview")).toBeInTheDocument();
+  });
+
+  it("다음 버튼을 누르면 두 번째 질문으로 이동한다", () => {
+    render(
+      <InvitationAboutSection
+        coupleSince="2025년 4월 13일부터 함께하고 있습니다."
+        profiles={PROFILES}
+        interviews={INTERVIEWS}
+      />,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "다음 질문" }));
+
+    expect(screen.getByText("결혼을 결심한 계기")).toBeInTheDocument();
+    expect(screen.queryByText("첫인상은 어땠나요?")).not.toBeInTheDocument();
+  });
+
+  it("이전 버튼을 누르면 마지막 질문으로 순환한다", () => {
+    render(
+      <InvitationAboutSection
+        coupleSince="2025년 4월 13일부터 함께하고 있습니다."
+        profiles={PROFILES}
+        interviews={INTERVIEWS}
+      />,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "이전 질문" }));
+
+    expect(screen.getByText("결혼을 결심한 계기")).toBeInTheDocument();
+  });
+
+  it("인디케이터 버튼으로 특정 질문으로 이동한다", () => {
+    render(
+      <InvitationAboutSection
+        coupleSince="2025년 4월 13일부터 함께하고 있습니다."
+        profiles={PROFILES}
+        interviews={INTERVIEWS}
+      />,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "2번 질문" }));
+
+    expect(screen.getByText("결혼을 결심한 계기")).toBeInTheDocument();
   });
 });

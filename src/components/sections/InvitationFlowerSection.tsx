@@ -19,14 +19,14 @@ export default function InvitationFlowerSection({
     <>
       <section className="bg-white px-6 py-14">
         <AnimateOnScroll animation="fade-up">
-          <div className="text-center">
+          <div className="mb-6 text-center">
             <p className="section-kicker">Flower</p>
-            <h2 className="font-serif mt-2 text-[1.55rem]">축하 화환</h2>
-            <div className="mt-6 space-y-2">
+            <h2 className="font-serif mt-2 text-[1.55rem]">화환 안내</h2>
+            <div className="mt-5 space-y-1">
               {flowerMessage.map((line) => (
                 <p
                   key={line}
-                  className="font-serif text-[0.95rem] leading-[1.9] text-[rgba(23,20,18,0.68)]"
+                  className="font-serif text-[0.94rem] leading-[1.9] text-[rgba(23,20,18,0.62)]"
                 >
                   {line}
                 </p>
@@ -36,15 +36,14 @@ export default function InvitationFlowerSection({
         </AnimateOnScroll>
 
         <AnimateOnScroll animation="fade-up" delay={100}>
-          <div className="mt-8 flex justify-center">
-            <button
-              type="button"
-              onClick={() => setIsOpen(true)}
-              className="rounded-full bg-[#111111] px-7 py-3 text-sm text-white shadow-[0_16px_30px_rgba(17,17,17,0.2)]"
-            >
-              화환 보내기
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={() => setIsOpen(true)}
+            aria-label="화환 보내기"
+            className="mx-auto flex items-center gap-2 rounded-full border border-[rgba(23,20,18,0.12)] bg-white px-6 py-3 text-sm text-[rgba(23,20,18,0.72)] shadow-[0_4px_16px_rgba(23,20,18,0.06)]"
+          >
+            화환 보내기
+          </button>
         </AnimateOnScroll>
       </section>
 

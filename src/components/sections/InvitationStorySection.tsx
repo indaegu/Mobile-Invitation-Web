@@ -13,13 +13,47 @@ interface InvitationStorySectionProps {
   storyImages: string[];
 }
 
-function formatFamilyLine(
-  parents: ParentInfo | undefined,
-  suffix: string,
-  name: string,
-) {
-  if (!parents) return "";
-  return `${parents.father}·${parents.mother}${suffix} ${name}`;
+/** 문장 단위로 분리 (마침표+공백 기준) */
+function splitSentences(text: string): string[] {
+  return text
+    .split(/(?<=합니다|습니다|겠습니다|드립니다|니다|세요|어요|아요|요)\.\s+/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
+/** 제목에서 "가을," 이후 줄바꿈 */
+function renderTitleWithBreak(title: string) {
+  const breakPoint = title.indexOf("가을,");
+  if (breakPoint === -1) return title;
+  const before = title.slice(0, breakPoint + 3); // "다섯 번째 가을,"
+  const after = title.slice(breakPoint + 3).trimStart(); // "우리는 '우리'가 됩니다."
+  return (
+    <>
+      {before}
+      <br />
+      {after}
+    </>
+  );
+}
+
+function FamilyLine({
+  parents,
+  suffix,
+  name,
+}: {
+  parents: ParentInfo | undefined;
+  suffix: string;
+  name: string;
+}) {
+  if (!parents) return null;
+  return (
+    <p className="font-serif text-sm leading-[1.9] text-[rgba(23,20,18,0.78)]">
+      <span className="font-semibold">{parents.father}</span>
+      {"·"}
+      <span className="font-semibold">{parents.mother}</span>
+      {suffix} <span className="font-semibold">{name}</span>
+    </p>
+  );
 }
 
 export default function InvitationStorySection({
@@ -29,77 +63,62 @@ export default function InvitationStorySection({
   brideParents,
   invitationTitle,
   invitationBody,
-  storyImages,
+  storyImages: _storyImages,
 }: InvitationStorySectionProps) {
-  const groomLine = formatFamilyLine(groomParents, "의 아들", groomName);
-  const brideLine = formatFamilyLine(brideParents, "의 딸", brideName);
-
   return (
     <section className="bg-white px-6 py-14">
       <AnimateOnScroll animation="fade-up">
         <div className="mb-8 text-center">
           <p className="section-kicker">We become who we are</p>
-          <h2 className="font-serif mt-2 text-[1.55rem] leading-[1.55] text-[rgba(23,20,18,0.96)]">
-            {invitationTitle}
+          <h2 className="font-serif mt-2 text-[1.5rem] leading-[1.55] text-[rgba(23,20,18,0.96)] font-semibold">
+            {renderTitleWithBreak(invitationTitle)}
           </h2>
         </div>
       </AnimateOnScroll>
 
       <AnimateOnScroll animation="fade-up" delay={100}>
-        <div className="paper-panel rounded-[1.75rem] px-6 py-8">
-          <div className="space-y-5 text-center">
-            {invitationBody.map((paragraph) => (
-              <p
-                key={paragraph}
-                className="font-serif text-[0.94rem] leading-[2] text-[rgba(23,20,18,0.72)]"
-              >
-                {paragraph}
-              </p>
-            ))}
-          </div>
-
-          <div className="my-8 flex items-center justify-center">
-            <div className="section-divider w-20" />
-            <div className="mx-4 flex h-10 w-10 items-center justify-center rounded-full border border-[rgba(23,20,18,0.08)] bg-white">
-              <span className="font-display text-[1.4rem] text-[rgba(23,20,18,0.78)]">
-                ♥
-              </span>
-            </div>
-            <div className="section-divider w-20" />
-          </div>
-
-          <div className="space-y-2 text-center">
-            <p className="font-serif text-sm leading-[1.9] text-[rgba(23,20,18,0.78)]">
-              {groomLine}
+        <div className="space-y-5 text-center">
+          {invitationBody.map((paragraph) => (
+            <p
+              key={paragraph}
+              className="font-serif text-[0.94rem] leading-loose text-[rgba(23,20,18,0.72)]"
+            >
+              {splitSentences(paragraph).map((sentence, i, arr) => (
+                <span key={i}>
+                  {sentence}
+                  {i < arr.length - 1 ? (
+                    <>
+                      {"."}
+                      <br />
+                    </>
+                  ) : (
+                    "."
+                  )}
+                </span>
+              ))}
             </p>
-            <p className="font-serif text-sm leading-[1.9] text-[rgba(23,20,18,0.78)]">
-              {brideLine}
-            </p>
-          </div>
+          ))}
         </div>
       </AnimateOnScroll>
 
       <AnimateOnScroll animation="fade-up" delay={200}>
-        <div className="mt-10 grid grid-cols-2 gap-4">
-          {storyImages.map((image, index) => (
-            <article
-              key={image}
-              className="soft-card overflow-hidden rounded-[1.4rem] p-2"
-            >
-              <div className="image-mask h-48 bg-[#e8e0d3]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={image}
-                  alt={
-                    index === 0
-                      ? `${groomName} 프로필 이미지`
-                      : `${brideName} 프로필 이미지`
-                  }
-                  className="h-full w-full object-cover"
-                />
-              </div>
-            </article>
-          ))}
+        <div className="my-8 flex items-center justify-center">
+          <div className="section-divider w-20" />
+          <div className="mx-4 flex h-10 w-10 items-center justify-center rounded-full border border-[rgba(23,20,18,0.08)] bg-white">
+            <span className="font-display text-[1.4rem] text-[rgba(23,20,18,0.78)]">
+              ♥
+            </span>
+          </div>
+          <div className="section-divider w-20" />
+        </div>
+
+        <div className="space-y-2 text-center">
+          <FamilyLine
+            parents={groomParents}
+            suffix="의 아들"
+            name={groomName}
+          />
+          <FamilyLine parents={brideParents} suffix="의 딸" name={brideName} />
         </div>
       </AnimateOnScroll>
     </section>

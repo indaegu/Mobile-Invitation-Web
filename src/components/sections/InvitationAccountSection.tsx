@@ -52,10 +52,26 @@ function AccountItem({
 export default function InvitationAccountSection({
   accountGroups,
 }: InvitationAccountSectionProps) {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  // 기본값 null = 모두 닫힘
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section className="bg-white px-6 py-8">
+    <section className="bg-[#f7f4ef] px-6 py-14">
+      {/* 헤더 */}
+      <AnimateOnScroll animation="fade-up">
+        <div className="mb-10 text-center">
+          <p className="section-kicker">Account</p>
+          <h2 className="font-serif mt-2 text-[1.55rem]">마음 전하는 곳</h2>
+          <p className="font-serif mt-5 text-[0.94rem] leading-[2.1] text-[rgba(23,20,18,0.62)]">
+            비대면으로 축하를 전하고자
+            <br />
+            하시는 분들을 위해 기재하였습니다.
+            <br />
+            너그러운 마음으로 양해 부탁드립니다.
+          </p>
+        </div>
+      </AnimateOnScroll>
+
       <div className="space-y-3">
         {accountGroups.map((group, index) => {
           const isOpen = openIndex === index;

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import type { InterviewCard, PersonProfile } from "@/types/invitation.type";
 import AnimateOnScroll from "@/components/ui/AnimateOnScroll";
 
@@ -14,6 +15,14 @@ export default function InvitationAboutSection({
   profiles,
   interviews,
 }: InvitationAboutSectionProps) {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const handlePrev = () =>
+    setActiveIndex((i) => (i - 1 + interviews.length) % interviews.length);
+  const handleNext = () => setActiveIndex((i) => (i + 1) % interviews.length);
+
+  const current = interviews[activeIndex];
+
   return (
     <section className="bg-[#f7f4ef] px-6 py-14">
       <AnimateOnScroll animation="fade-up">
@@ -60,20 +69,25 @@ export default function InvitationAboutSection({
         </p>
       </AnimateOnScroll>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-2">
-        {interviews.map((interview, index) => (
-          <AnimateOnScroll
-            key={interview.question}
-            animation="fade-up"
-            delay={index === 0 ? 0 : index === 1 ? 100 : 200}
-          >
-            <article className="rounded-[1.4rem] border border-[rgba(23,20,18,0.12)] bg-white p-5">
+      {/* 인터뷰 섹션 */}
+      {interviews.length > 0 && (
+        <AnimateOnScroll animation="fade-up" delay={300}>
+          <div className="mt-10 text-center">
+            <p className="section-kicker">Interview</p>
+            <h3 className="font-serif mt-2 text-[1.3rem] text-[rgba(23,20,18,0.92)]">
+              우리에게 물었습니다
+            </h3>
+          </div>
+
+          {/* 캐러셀 */}
+          <div className="relative mt-6">
+            <article className="min-h-48 rounded-[1.4rem] border border-[rgba(23,20,18,0.12)] bg-white p-5">
               <p className="font-serif text-[1rem] text-[rgba(23,20,18,0.92)]">
-                {interview.question}
+                {current?.question}
               </p>
               <div className="mt-4 space-y-4">
-                {interview.answers.map((answer) => (
-                  <div key={`${interview.question}-${answer.speaker}`}>
+                {current?.answers.map((answer) => (
+                  <div key={`${current.question}-${answer.speaker}`}>
                     <p className="text-[0.76rem] uppercase tracking-[0.22em] text-[rgba(23,20,18,0.36)]">
                       {answer.speaker}
                     </p>
@@ -84,9 +98,47 @@ export default function InvitationAboutSection({
                 ))}
               </div>
             </article>
-          </AnimateOnScroll>
-        ))}
-      </div>
+
+            {/* 좌우 버튼 */}
+            <div className="mt-4 flex items-center justify-between">
+              <button
+                type="button"
+                onClick={handlePrev}
+                aria-label="이전 질문"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[rgba(23,20,18,0.56)] shadow-[0_4px_12px_rgba(23,20,18,0.08)] transition-opacity active:opacity-70"
+              >
+                ‹
+              </button>
+
+              {/* 인디케이터 */}
+              <div className="flex gap-2">
+                {interviews.map((_, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => setActiveIndex(i)}
+                    aria-label={`${i + 1}번 질문`}
+                    className={`h-1.5 rounded-full transition-all ${
+                      i === activeIndex
+                        ? "w-6 bg-[#171412]"
+                        : "w-1.5 bg-[rgba(23,20,18,0.22)]"
+                    }`}
+                  />
+                ))}
+              </div>
+
+              <button
+                type="button"
+                onClick={handleNext}
+                aria-label="다음 질문"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[rgba(23,20,18,0.56)] shadow-[0_4px_12px_rgba(23,20,18,0.08)] transition-opacity active:opacity-70"
+              >
+                ›
+              </button>
+            </div>
+          </div>
+        </AnimateOnScroll>
+      )}
     </section>
   );
 }
